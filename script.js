@@ -14,6 +14,7 @@ let cross = `<svg class="cross">
                 <line class="second" x1="100" y1="15" x2="15" y2="100" 
                 stroke="red" stroke-width="10" stroke-linecap="round"/>
             </svg>`;
+let stat = {'cross': 0, 'zero': 0, 'draw': 0};
 
 function stepCross(target) {
     target.innerHTML = cross;
@@ -62,7 +63,10 @@ function win() {
                     fields[comb[i][2]].classList.add('active');
                     res.innerHTML = 'X wins';
                 }, 1500);
+                stat.cross += 1;
+                updateStat();
                 game.removeEventListener('click', init);
+                return;
         }
         else if(fields[comb[i][0]].classList.contains('o') && 
             fields[comb[i][1]].classList.contains('o') && 
@@ -73,13 +77,28 @@ function win() {
                     fields[comb[i][2]].classList.add('active');
                     res.innerHTML = 'O wins';
                 }, 1500);
+                stat.zero += 1;
+                updateStat();
                 game.removeEventListener('click', init);
+                return;
         }
-        else if(count == 9){
-            res.innerHTML = 'Draw';
-            game.removeEventListener('click', init);
-        }
+    }    
+    if(count == 9){
+        res.innerHTML = 'Draw';
+        stat.draw += 1;
+        updateStat();
+        game.removeEventListener('click', init);
     }
+}
+
+function updateStat(){
+    let resX = document.getElementById('resX');
+    let resO = document.getElementById('resO');
+    let resD = document.getElementById('resD');
+
+    resX.innerHTML = stat.cross;
+    resO.innerHTML = stat.zero;
+    resD.innerHTML = stat.draw;
 }
 
 btn.addEventListener('click', newGame);
