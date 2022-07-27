@@ -4,11 +4,11 @@ let btn = document.querySelector('.new-game');
 let fields = document.querySelectorAll('.field');
 let step = false;
 let count = 0;
-let circle = `<svg class="circle">
+let circle = `<svg class="circle o">
                 <circle r="45" cx="58" cy="58" stroke="blue" stroke-width="10" 
                 fill="none" strole-linecap="round" />
             </svg>`;
-let cross = `<svg class="cross">
+let cross = `<svg class="cross x">
                 <line class="first" x1="15" y1="15" x2="100" y2="100" 
                 stroke="red" stroke-width="10" stroke-linecap="round"/>
                 <line class="second" x1="100" y1="15" x2="15" y2="100" 
@@ -17,12 +17,14 @@ let cross = `<svg class="cross">
 let stat = {'cross': 0, 'zero': 0, 'draw': 0};
 
 function stepCross(target) {
+    if (target.classList.contains('x') || target.classList.contains('o')) return;
     target.innerHTML = cross;
     target.classList.add('x');
     count++;
 }
 
 function stepZero(target) {
+    if (target.classList.contains('x') || target.classList.contains('o')) return;
     target.innerHTML = circle;
     target.classList.add('o');
     count++;
